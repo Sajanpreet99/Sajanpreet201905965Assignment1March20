@@ -1,0 +1,109 @@
+//NAME: Sajanprret Sammi Dhillon
+//Student ID: 201905965
+//DATE Submitted: 20 MARCH,2021
+//Class: IN2203 G2
+// Assignment 1: The Gambling Game
+
+import java.util.*;
+import java.math.*;
+
+public class MainApplication{
+        public static void main(String args[]){
+                Casino c=new Casino();
+                c.OrganizeNewGame();
+        }
+}
+class Casino{
+        //in programming land: we refer to Stories as "requirements"
+        //R001: A player walks into a casino and wants to play a game
+        //we must design the algorithm for how the player interacts with the GAME:
+        String userAnswer;
+        Scanner sc=new Scanner(System.in); //System.in is a standard input stream
+        
+        public void OrganizeNewGame(){
+        
+        System.out.println("Welcome to our Casino: would you like to play a game? (y/n)");
+        userAnswer=sc.nextLine();
+        if(userAnswer.equals("y")){
+        System.out.println("let's gets started");
+         //variables to keep track of winning count
+        int playerwincount=0,computerwincount=0;
+        //for-loop for 5 rounds
+        for(int i=0;i<5;i++){
+        Game g1=new Game();
+        g1.PlayGame();
+        //pass the playerguess and computer guess to player class
+         Player p1=new Player(g1.getPlayerGuess(),g1.getComputerGuess());
+         if(p1.isPlayerWinner()){
+        System.out.println("Player wins");
+        playerwincount++;
+        //display wining count each time
+        System.out.println("Player: "+playerwincount);
+        System.out.println("Computer: "+computerwincount);
+        } else{
+        System.out.println("Computer wins");
+        computerwincount++;
+        //display wining count each time
+        System.out.println("Player: "+playerwincount);
+        System.out.println("Computer: "+computerwincount);
+                }                                                
+        }
+        if(playerwincount>computerwincount)
+        System.out.println("*****PLAYER WINS*****");
+        else
+        System.out.println("*****COMPUTER WINS*****");
+        }  else{
+         System.out.println("Good bye!");
+                }
+        }
+}
+class Game{
+
+        Random rand=new Random();
+        private int ComputerGuess=-1,PlayerGuess=-1;
+        public void PlayGame(){
+        System.out.println("Guess a number from 1 to 100");
+        System.out.println("And I will guess a game");
+        System.out.println("If your guess is within 20 of my guess: then you win. Else I will win!");
+        System.out.print("Enter your guess: ");
+        Scanner sc=new Scanner(System.in);
+        //input the player's guess
+        PlayerGuess=sc.nextInt();
+        ComputerGuess=ComputerGuess();
+        System.out.println("Computer Guess is "+ ComputerGuess);
+        }
+        //getter for player's guess
+
+        public int getPlayerGuess(){
+                return PlayerGuess;
+        }
+        //getter for computer's guess
+        public int getComputerGuess(){
+                return ComputerGuess;
+        }
+        public int ComputerGuess(){
+                //implement the Algorithms to generate the computer's guess
+                //use a Random number generate
+                int programGuess=rand.nextInt(100);
+                return programGuess;
+        }
+}
+class Player{
+
+        //collect user's input
+        //compare it to the computer's guess
+        //you have to come up with the winning Algorithm
+        int playerGuess,computerGuess;
+        Player(int playerGuess,int computerGuess){
+                this.playerGuess=playerGuess;
+                this.computerGuess=computerGuess;
+        }
+        boolean isPlayerWinner(){
+                //if th player's guess is within range of 20 from computer's guess then player wins
+                if(Math.abs(playerGuess-computerGuess)<=20)
+                return true;
+                else
+                return false;
+        }
+}
+
